@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Architects｜連結願景，形塑空間 — 互動式 3D 建築與室內空間體驗</title>
+  <meta name="description" content="Nexus Architects 建築師事務所：以精準的設計語彙與工程技術，讓建築成為人與環境之間的對話。線上即時 3D 建築旋轉、剖面透視與室內空間漫遊體驗。" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Top Architectural Navigation -->
+  <header class="site-header" id="top">
+    <div class="header-inner">
+      <a href="#top" class="brand-lockup" aria-label="Nexus Architects 首頁">
+        <svg class="brand-mark" viewBox="0 0 64 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="#C93B2B">
+            <circle cx="8" cy="11" r="2.1"/><circle cx="15" cy="9" r="2.3"/><circle cx="22" cy="10" r="2.5"/><circle cx="29" cy="13" r="2.3"/><circle cx="36" cy="17" r="2.1"/><circle cx="43" cy="20" r="2.3"/><circle cx="50" cy="19" r="2.5"/><circle cx="57" cy="15" r="2.1"/>
+            <circle cx="6" cy="19" r="2.0"/><circle cx="13" cy="17" r="2.4"/><circle cx="20" cy="18" r="2.6"/><circle cx="27" cy="21" r="2.5"/><circle cx="34" cy="25" r="2.3"/><circle cx="41" cy="28" r="2.5"/><circle cx="48" cy="27" r="2.6"/><circle cx="55" cy="23" r="2.2"/>
+            <circle cx="9" cy="27" r="1.9"/><circle cx="16" cy="26" r="2.2"/><circle cx="23" cy="27" r="2.3"/><circle cx="30" cy="30" r="2.2"/><circle cx="37" cy="33" r="2.0"/><circle cx="44" cy="34" r="2.1"/><circle cx="51" cy="32" r="2.1"/>
+          </g>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">NEXUS ARCHITECTS</span>
+          <span class="brand-tag">CONNECTING VISIONS. SHAPING SPACES.</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="主導覽列">
+        <a href="#studio-3d">3D 空間體驗</a>
+        <a href="#philosophy">設計哲學</a>
+        <a href="#methodology">設計方法</a>
+        <a href="#services">服務範圍</a>
+        <a href="#contact">預約諮詢</a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="btn-jump-interior">進入室內漫遊</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero + Interactive 3D Architectural Studio -->
+    <section class="hero-studio" id="studio-3d">
+      <div class="hero-editorial">
+        <div class="editorial-top">
+          <p class="eyebrow">NEXUS ARCHITECTS ／ 建築・室內・都市更新</p>
+          <h1 class="hero-title">我們讓建築成為<br />人與環境之間的對話</h1>
+          <p class="hero-lead">
+            建築不只是鋼筋與混凝土的堆疊，而是人與環境、過去與未來之間的深刻連結。以精準的設計語彙與創新的工程技術，把抽象概念轉化為兼具美學與機能的真實空間。
+          </p>
+          <p class="brand-mantra">
+            <span>Connecting visions, shaping spaces.</span>
+            <span class="divider-dot">·</span>
+            <span>連結願景，形塑空間</span>
+          </p>
+        </div>
+
+        <!-- Project Selector Cards -->
+        <div class="project-switcher" role="region" aria-label="切換 3D 建築專案">
+          <div class="switcher-header">
+            <span class="mono-label">SELECT 3D MODEL</span>
+            <span class="mono-hint">點擊切換建築與室內模型</span>
+          </div>
+          <div class="project-tabs" id="project-tabs">
+            <!-- Populated dynamically from projects-data.js -->
+          </div>
+        </div>
+
+        <!-- Active Project Specs -->
+        <div class="active-project-info" id="active-project-info">
+          <div class="info-row">
+            <div>
+              <span class="mono-label" id="project-category">建築設計與規劃</span>
+              <h2 class="project-name" id="project-title">山丘光影宅邸 Hillside Courtyard Villa</h2>
+            </div>
+            <span class="project-area-badge" id="project-area">420 m² · 2F</span>
+          </div>
+          <p class="project-desc" id="project-desc"></p>
+          <div class="project-cta-row">
+            <button type="button" class="btn btn-primary" id="btn-hero-cutaway">
+              <span>剖面透視看室內</span>
+            </button>
+            <button type="button" class="btn btn-secondary" id="btn-hero-walk">
+              <span>室內第一人稱漫遊</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive 3D WebGL Viewport -->
+      <div class="viewer-shell" id="viewer-shell">
+        <div class="canvas-stage" id="canvas-stage" aria-label="互動式 3D 建築與室內空間檢視器">
+          <canvas id="architect-canvas"></canvas>
+
+          <!-- Loading Overlay -->
+          <div class="viewer-loading" id="viewer-loading">
+            <div class="loading-spinner"></div>
+            <p>正在建構 3D 建築與室內空間模型…</p>
+          </div>
+
+          <!-- Top-Left Viewport Telemetry -->
+          <div class="hud-top-left">
+            <div class="hud-pill hud-status">
+              <span class="status-dot"></span>
+              <span id="hud-mode-label">外觀自由旋轉模式</span>
+            </div>
+            <div class="hud-pill hud-coords" id="hud-camera-hint">
+              左鍵拖曳旋轉 · 滾輪縮放 · 右鍵平移
+            </div>
+          </div>
+
+          <!-- Top-Right Utility Controls -->
+          <div class="hud-top-right">
+            <button type="button" class="hud-icon-btn" id="btn-auto-rotate" title="自動環繞旋轉">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+              <span>自動旋轉</span>
+            </button>
+            <button type="button" class="hud-icon-btn" id="btn-reset-view" title="重設視角">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>重設視角</span>
+            </button>
+            <button type="button" class="hud-icon-btn" id="btn-fullscreen" title="全螢幕檢視">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              <span>全螢幕</span>
+            </button>
+          </div>
+
+          <!-- First-person Walk Pad (visible in walk mode) -->
+          <div class="walk-hud hidden" id="walk-hud">
+            <div class="walk-instructions">
+              <strong>室內漫遊操作：</strong>按住滑鼠拖曳環顧四周，使用 <code>W A S D</code> 或方向鍵前後左右移動，或點擊下方空間點位瞬移。
+            </div>
+            <div class="walk-dpad" aria-label="室內移動方向鍵">
+              <button type="button" data-move="forward" aria-label="前進">▲</button>
+              <div class="dpad-mid">
+                <button type="button" data-move="left" aria-label="左移">◀</button>
+                <button type="button" data-move="backward" aria-label="後退">▼</button>
+                <button type="button" data-move="right" aria-label="右移">▶</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Room Caption Card -->
+          <div class="room-caption hidden" id="room-caption">
+            <span class="mono-label" id="room-caption-floor">1F INTERIOR</span>
+            <h3 id="room-caption-title">雙層挑高客廳</h3>
+            <p id="room-caption-desc">自然光線透過格柵與落地窗灑落洞石牆面，串聯室內與戶外水院景觀。</p>
+          </div>
+
+          <!-- Bottom Control Dock -->
+          <div class="hud-bottom-dock">
+            <!-- Row 1: View Mode & Room Hotspots -->
+            <div class="dock-section">
+              <div class="dock-group">
+                <span class="dock-label">空間檢視模式</span>
+                <div class="segmented-control" id="view-mode-controls">
+                  <button type="button" class="seg-btn active" data-view-mode="exterior">建築外觀</button>
+                  <button type="button" class="seg-btn" data-view-mode="cutaway">剖面開頂</button>
+                  <button type="button" class="seg-btn" data-view-mode="plan">頂視平面</button>
+                  <button type="button" class="seg-btn" data-view-mode="walk">室內漫遊</button>
+                </div>
+              </div>
+
+              <div class="dock-group dock-rooms">
+                <span class="dock-label">室內空間點位</span>
+                <div class="hotspot-pills" id="hotspot-pills">
+                  <!-- Populated dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Sun Path & Architectural Material Mode -->
+            <div class="dock-section dock-section-secondary">
+              <div class="dock-group sun-control">
+                <label class="dock-label" for="sun-slider">
+                  <span>日照與光影模擬</span>
+                  <strong id="sun-time-readout">16:30 黃金時刻</strong>
+                </label>
+                <div class="sun-slider-wrap">
+                  <span class="sun-icon">☀</span>
+                  <input type="range" id="sun-slider" min="6" max="22" step="0.25" value="16.5" />
+                  <span class="sun-icon">☾</span>
+                </div>
+              </div>
+
+              <div class="dock-group">
+                <span class="dock-label">材質與表現形式</span>
+                <div class="segmented-control" id="render-style-controls">
+                  <button type="button" class="seg-btn active" data-render-style="realistic">擬真材質</button>
+                  <button type="button" class="seg-btn" data-render-style="clay">白模量體</button>
+                  <button type="button" class="seg-btn" data-render-style="blueprint">線框藍圖</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Design Philosophy (Gamma Card 3) -->
+    <section class="section philosophy-section" id="philosophy">
+      <div class="container">
+        <div class="philosophy-grid">
+          <div class="philosophy-visual">
+            <div class="material-study-card">
+              <div class="material-study-overlay">
+                <span class="mono-label">MATERIALITY &amp; CONTEXT</span>
+                <p>溫潤洞石、實木格柵與自然光影，構成時間可承接的建築紋理。</p>
+              </div>
+              <div class="swatch-stack">
+                <div class="swatch-item">
+                  <span class="swatch-color" style="background: #d8cdb9;"></span>
+                  <div>
+                    <strong>米黃洞石 Travertine</strong>
+                    <small>天然孔隙與暖砂肌理，呼應大地層理</small>
+                  </div>
+                </div>
+                <div class="swatch-item">
+                  <span class="swatch-color" style="background: #8c6b4a;"></span>
+                  <div>
+                    <strong>溫潤橡木 Warm Oak</strong>
+                    <small>調節室內光線與觸感的人本溫度</small>
+                  </div>
+                </div>
+                <div class="swatch-item">
+                  <span class="swatch-color" style="background: #6d6a65;"></span>
+                  <div>
+                    <strong>清水模混凝土 Architectural Concrete</strong>
+                    <small>俐落結構比例與經久耐用的結構美學</small>
+                  </div>
+                </div>
+                <div class="swatch-item">
+                  <span class="swatch-color" style="background: #b88e23;"></span>
+                  <div>
+                    <strong>古銅與赭金細節 Patinated Brass</strong>
+                    <small>隨時間氧化出溫厚光澤的收邊語彙</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="philosophy-content">
+            <p class="eyebrow">設計哲學 · DESIGN PHILOSOPHY</p>
+            <h2 class="section-title">空間因人而生，<br />也因環境而長久</h2>
+
+            <div class="pillar-list">
+              <article class="pillar-item">
+                <span class="pillar-index">01</span>
+                <div>
+                  <h3>人本核心</h3>
+                  <p>傾聽業主的故事與需求，把生活哲學與日常軌跡融入建築紋理。</p>
+                </div>
+              </article>
+
+              <article class="pillar-item">
+                <span class="pillar-index">02</span>
+                <div>
+                  <h3>永續共生</h3>
+                  <p>善用自然採光、通風與綠建材，讓建築與周遭地景和諧共存。</p>
+                </div>
+              </article>
+
+              <article class="pillar-item">
+                <span class="pillar-index">03</span>
+                <div>
+                  <h3>美學與機能</h3>
+                  <p>追求比例與線條美感，同時守住實用性與時間考驗。</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Design Methodology (Gamma Card 4) -->
+    <section class="section methodology-section" id="methodology">
+      <div class="container">
+        <div class="section-header-split">
+          <div>
+            <p class="eyebrow">設計方法 · METHODOLOGY</p>
+            <h2 class="section-title">從概念到落地，<br />我們把每一個決策做得更精準</h2>
+          </div>
+          <p class="section-side-note">點擊下方階段卡片，查看每個階段的空間決策與 3D 數位驗證重點。</p>
+        </div>
+
+        <div class="method-grid" id="method-grid">
+          <button type="button" class="method-card active" data-phase="01">
+            <span class="method-num">01</span>
+            <div class="method-rule"></div>
+            <h3>理解</h3>
+            <p>梳理場地條件、使用需求與生活脈絡。</p>
+          </button>
+
+          <button type="button" class="method-card" data-phase="02">
+            <span class="method-num">02</span>
+            <div class="method-rule"></div>
+            <h3>轉譯</h3>
+            <p>建立清楚的設計語彙，將願景化為空間策略。</p>
+          </button>
+
+          <button type="button" class="method-card" data-phase="03">
+            <span class="method-num">03</span>
+            <div class="method-rule"></div>
+            <h3>整合</h3>
+            <p>以工程技術、材料與細節支撐美學表達。</p>
+          </button>
+
+          <button type="button" class="method-card" data-phase="04">
+            <span class="method-num">04</span>
+            <div class="method-rule"></div>
+            <h3>實現</h3>
+            <p>從法規諮詢到施工圖，陪伴方案走進真實場域。</p>
+          </button>
+        </div>
+
+        <div class="method-detail-panel" id="method-detail-panel">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Scope of Services (Gamma Card 5) -->
+    <section class="section services-section" id="services">
+      <div class="container">
+        <p class="eyebrow">服務範圍 · SCOPE OF SERVICES</p>
+        <h2 class="section-title">三種專業服務，串起完整的空間生命週期</h2>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 52V24l20-12 20 12v28"/>
+                <path d="M4 52h56"/>
+                <path d="M24 52V34h16v18"/>
+                <path d="M18 22h28"/>
+                <circle cx="32" cy="18" r="2.5"/>
+              </svg>
+            </div>
+            <h3>建築設計與規劃</h3>
+            <p>從概念發想、法規諮詢到施工圖繪製的全方位服務，建立量體、日照與動線的整體秩序。</p>
+            <button type="button" class="service-launch-btn" data-load-project="villa">
+              <span>載入 3D 住宅案例「山丘光影宅邸」</span>
+              <span>→</span>
+            </button>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 38h24v12H14z"/>
+                <path d="M10 32v18M42 32v18"/>
+                <path d="M16 32v-8a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v8"/>
+                <path d="M50 50V18"/>
+                <path d="M43 18h14l-3-8H46l-3 8z"/>
+                <path d="M45 50h10"/>
+              </svg>
+            </div>
+            <h3>室內與空間設計</h3>
+            <p>延續建築外觀語彙，打造內外合一的流暢動線、自然採光比例與精緻材質細節。</p>
+            <button type="button" class="service-launch-btn" data-load-project="atelier">
+              <span>載入 3D 室內案例「雲境垂直藝廊」</span>
+              <span>→</span>
+            </button>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="10" y="24" width="24" height="28"/>
+                <rect x="34" y="14" width="20" height="38"/>
+                <path d="M16 32h12M16 40h12M40 22h8M40 30h8M40 38h8"/>
+                <path d="M6 52h52"/>
+              </svg>
+            </div>
+            <h3>老屋改造與都市更新</h3>
+            <p>保留結構記憶並植入現代玻璃量體與天窗中庭，賦予舊建築新的生命力與當代使用價值。</p>
+            <button type="button" class="service-launch-btn" data-load-project="heritage">
+              <span>載入 3D 改建案例「舊倉新生文創館」</span>
+              <span>→</span>
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Closing Ethos & Consultation (Gamma Cards 6 & 7) -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="ethos-panel">
+            <p class="eyebrow">空間承諾 · OUR ETHOS</p>
+            <h2 class="section-title">我們設計的不只是空間，<br />而是可以被生活承接的風景</h2>
+            <ul class="ethos-list">
+              <li>每一個專案都從真實的人、場地與時間出發。</li>
+              <li>以可持續的材料、光線與動線，建立長久而有歸屬感的場域。</li>
+              <li>讓理想藍圖成為可被使用、感受，也能經得起時間考驗的建築。</li>
+            </ul>
+
+            <div class="signoff-block">
+              <p class="signoff-en">Connecting visions, shaping spaces.</p>
+              <p class="signoff-zh">連結願景，形塑空間</p>
+              <div class="signoff-rule"></div>
+              <p class="signoff-note">Nexus Architects／與您攜手，將心中的理想藍圖化為真實的風景。</p>
+            </div>
+          </div>
+
+          <div class="consultation-card">
+            <span class="mono-label">PROJECT INQUIRY</span>
+            <h3>預約建築與空間初步諮詢</h3>
+            <p class="form-intro">歡迎留下您的基地條件或空間需求，我們將安排建築師與您進行一對一 3D 概念討論。</p>
+
+            <form id="consultation-form" class="consultation-form">
+              <div class="form-row">
+                <label for="client-name">聯絡人姓名</label>
+                <input type="text" id="client-name" name="name" placeholder="例：陳建築／林小姐" required />
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-row">
+                  <label for="client-email">電子信箱</label>
+                  <input type="email" id="client-email" name="email" placeholder="name@example.com" required />
+                </div>
+                <div class="form-row">
+                  <label for="service-type">諮詢服務類別</label>
+                  <select id="service-type" name="service">
+                    <option value="建築設計與規劃">建築設計與規劃</option>
+                    <option value="室內與空間設計">室內與空間設計</option>
+                    <option value="老屋改造與都市更新">老屋改造與都市更新</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-row">
+                  <label for="site-location">基地地點／坪數規模</label>
+                  <input type="text" id="site-location" name="location" placeholder="例：台北大安區 · 約 65 坪" />
+                </div>
+                <div class="form-row">
+                  <label for="reference-model">偏好的 3D 空間語彙</label>
+                  <select id="reference-model" name="reference">
+                    <option value="山丘光影宅邸">山丘光影宅邸（自然院落）</option>
+                    <option value="雲境垂直藝廊">雲境垂直藝廊（純淨室內）</option>
+                    <option value="舊倉新生文創館">舊倉新生文創館（老屋新構）</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label for="project-notes">專案願景或時程說明</label>
+                <textarea id="project-notes" name="notes" rows="3" placeholder="簡述您對空間採光、動線、機能或預計動工時間的想法…"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">送出空間諮詢需求</button>
+
+              <div class="form-feedback hidden" id="form-feedback" role="status"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>NEXUS ARCHITECTS</strong>
+        <span>Connecting visions, shaping spaces.</span>
+      </div>
+      <p>© 2026 Nexus Architects. 建築設計與空間規劃事務所 · 即時 WebGL 3D 展示系統</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
